@@ -31,6 +31,13 @@
 #include <linux/i2c.h>
 #include <linux/slab.h>
 
+#include <drm/drm_eld.h>  // Ensure this header is included
+
+// Define I2C_CLASS_DDC if not defined
+#ifndef I2C_CLASS_DDC
+#define I2C_CLASS_DDC (1<<3)
+#endif
+
 #include <drm/display/drm_hdmi_helper.h>
 #include <drm/drm_atomic_helper.h>
 #include <drm/drm_crtc.h>

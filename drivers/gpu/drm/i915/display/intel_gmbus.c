@@ -30,6 +30,11 @@
 #include <linux/export.h>
 #include <linux/i2c-algo-bit.h>
 #include <linux/i2c.h>
+#include <drm/drm_fixed.h>  // Ensure other necessary headers are included
+// Define I2C_CLASS_DDC if not defined
+#ifndef I2C_CLASS_DDC
+#define I2C_CLASS_DDC (1<<3)
+#endif
 
 #include <drm/display/drm_hdcp_helper.h>
 

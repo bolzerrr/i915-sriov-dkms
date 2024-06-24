@@ -23,6 +23,7 @@
  *
  */
 
+#include <drm/drm_fixed.h>
 #include <drm/drm_atomic.h>
 #include <drm/drm_atomic_helper.h>
 #include <drm/drm_edid.h>
@@ -75,7 +76,7 @@ static int intel_dp_mst_find_vcpi_slots_for_bpp(struct intel_encoder *encoder,
 	crtc_state->port_clock = limits->max_rate;
 
 	// TODO: Handle pbn_div changes by adding a new MST helper
-	if (!mst_state->pbn_div) {
+	if (mst_state->pbn_div.full == 0) {
 		mst_state->pbn_div = drm_dp_get_vc_payload_bw(&intel_dp->mst_mgr,
 							      crtc_state->port_clock,
 							      crtc_state->lane_count);
@@ -84,8 +85,8 @@ static int intel_dp_mst_find_vcpi_slots_for_bpp(struct intel_encoder *encoder,
 	for (bpp = max_bpp; bpp >= min_bpp; bpp -= step) {
 	    #if LINUX_VERSION_CODE < KERNEL_VERSION(6,6,14)
 			crtc_state->pbn = drm_dp_calc_pbn_mode(adjusted_mode->crtc_clock,
-						       dsc ? bpp << 4 : bpp,
-						       dsc);
+						       dsc ? bpp << 4 : bpp
+						       );
 		#endif
 		#if LINUX_VERSION_CODE >= KERNEL_VERSION(6,6,14)
 				crtc_state->pbn = drm_dp_calc_pbn_mode(adjusted_mode->crtc_clock,
@@ -905,7 +906,7 @@ intel_dp_mst_mode_valid_ctx(struct drm_connector *connector,
 		return ret;
 	#if LINUX_VERSION_CODE < KERNEL_VERSION(6,6,14)
 	    if (mode_rate > max_rate || mode->clock > max_dotclk ||
-	        drm_dp_calc_pbn_mode(mode->clock, min_bpp, false) > port->full_pbn) {
+	        drm_dp_calc_pbn_mode(mode->clock, min_bpp) > port->full_pbn) {
     #endif
     #if LINUX_VERSION_CODE >= KERNEL_VERSION(6,6,14)
 	    if (mode_rate > max_rate || mode->clock > max_dotclk ||

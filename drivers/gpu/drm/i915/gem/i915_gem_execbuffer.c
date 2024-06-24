@@ -10,7 +10,11 @@
 #include <linux/uaccess.h>
 #include <linux/version.h>
 
+#include <drm/drm_drv.h>
+#include <drm/drm_device.h>
+#include <drm/drm_file.h>
 #include <drm/drm_syncobj.h>
+#include <drm/drm_auth.h>  // Include the header where drm_is_current_master is declared
 
 #include "display/intel_frontbuffer.h"
 

@@ -25,6 +25,9 @@
 #include <linux/kernel.h>
 #include <asm/fpu/api.h>
 
+#include <linux/string.h>      // For memcpy
+#include <asm/cpufeature.h> // For static_cpu_has and boot_cpu_has
+
 #include "i915_memcpy.h"
 
 #if IS_ENABLED(CONFIG_DRM_I915_DEBUG)

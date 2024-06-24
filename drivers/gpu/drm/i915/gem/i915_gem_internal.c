@@ -6,6 +6,8 @@
 
 #include <linux/scatterlist.h>
 #include <linux/slab.h>
+#include <linux/mm.h>  // For MAX_ORDER
+#include <linux/mmzone.h>  // For MAX_ORDER
 
 #include "i915_drv.h"
 #include "i915_gem.h"
@@ -16,6 +18,10 @@
 
 #define QUIET (__GFP_NORETRY | __GFP_NOWARN)
 #define MAYFAIL (__GFP_RETRY_MAYFAIL | __GFP_NOWARN)
+#ifndef MAX_ORDER
+#define MAX_ORDER 11  // Example value; adjust as needed based on your kernel version
+#endif
+
 
 static void internal_free_pages(struct sg_table *st)
 {

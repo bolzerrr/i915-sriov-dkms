@@ -24,6 +24,7 @@
 #include <linux/component.h>
 #include <linux/kernel.h>
 
+#include <drm/drm_eld.h>  // Add this line to include drm_eld.h
 #include <drm/drm_edid.h>
 #include <drm/i915_component.h>
 

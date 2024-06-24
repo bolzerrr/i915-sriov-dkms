@@ -3,6 +3,7 @@
  * Copyright © 2022 Intel Corporation
  */
 
+#include <drm/drm_eld.h>  // Include drm_eld.h for drm_eld_size
 #include <drm/drm_edid.h>
 
 #include "i915_drv.h"
